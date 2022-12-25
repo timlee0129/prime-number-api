@@ -4,4 +4,4 @@ services:
     container_name: prime_number_api
     build: .
     ports:
-      - "80:80"
+      - "10000:10000"
