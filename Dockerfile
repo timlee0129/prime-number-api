@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir --upgrade -r /prime_number_project/requirements.t
 COPY ./prime_number_api /prime_number_project/prime_number_api
 
 # run app
-CMD ["uvicorn", "prime_number_api.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "prime_number_api.main:app", "--host", "0.0.0.0", "--port", "10000"]
