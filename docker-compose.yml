@@ -1,0 +1,7 @@
+version: "3.8.9"
+services:
+  prime_number_api:
+    container_name: prime_number_api
+    build: .
+    ports:
+      - "80:80"
