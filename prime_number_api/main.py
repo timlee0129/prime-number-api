@@ -26,7 +26,6 @@ def get_max_prime_entry() -> dict:
     cursor = app.numbers.find().sort('number',-1).limit(1)
     return cursor[0]
 
-
 @app.get("/")
 async def get_about() -> dict:
     max_prime_entry = get_max_prime_entry()
@@ -46,7 +45,8 @@ async def check_prime(num: List[str] = Query(default=None)):
     max_prime_entry = get_max_prime_entry()
     max_prime_number = max_prime_entry['number']
     for idx, val in enumerate(num):
-        assert val > 1 and val <= max_prime_number, "Invalid number entry. Number must be >1 and <= current max prime"
+        if val < 2 or val > max_prime_number:
+            raise HTTPException(status_code=400,detail=f"Invalid number entry: {val}. Numbers must be >1 and <= current max prime")
         cursor = app.numbers.find_one({"number":{"$eq":val}},{"_id": 0})
         num[idx] = {val: json.loads(dumps(cursor))}
     return num
