@@ -28,8 +28,8 @@ async def startup() -> None:
     app.numbers = app.database["numbers"]
 
 @app.on_event("shutdown")
-async def shutdown() -> None:
-    await app.mongodb_client.close()
+def shutdown() -> None:
+    app.mongodb_client.close()
 
 def get_max_prime_entry() -> dict:
     cursor = app.numbers.find().sort('number',-1).limit(1)
