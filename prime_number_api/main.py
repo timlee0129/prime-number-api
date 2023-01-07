@@ -6,9 +6,18 @@ from bson.json_util import dumps
 from decouple import config
 
 from fastapi import FastAPI, Query, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+
 from pymongo import MongoClient
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+)
 
 client = MongoClient(config('DB_URI'))
 
