@@ -76,7 +76,7 @@ async def get_prime_numbers(
         alias="type",
     ),
     q_min: Union[int, None] = Query(
-        default = 2,
+        default = None,
         alias="min",
     ),
     q_max: Union[int, None] = Query(
@@ -95,13 +95,15 @@ async def get_prime_numbers(
     min_prime = get_min_prime_entry().get(q_type)
     if q_max is None:
         q_max = max_prime
+    if q_min is None:
+        q_min = min_prime
     max_len = 1000
     if q_order not in valid_order:
         raise HTTPException(status_code=400,detail=f"Invalid 'order' input: {q_order}. 'order' must be one of these: {valid_order}")
     if q_type not in ["number", "order"]:
         raise HTTPException(status_code=400,detail=f"Invalid 'type' input: {q_type}. 'type' must be one of these: {valid_type}")
     if q_min < min_prime:
-        raise HTTPException(status_code=400,detail=f"Invalid 'min' input: {q_min}. 'min' must be >{min_prime} for type '{q_type}'")
+        raise HTTPException(status_code=400,detail=f"Invalid 'min' input: {q_min}. 'min' must be >={min_prime} for type '{q_type}'")
     if q_max > max_prime:
         raise HTTPException(status_code=400,detail=f"Invalid 'max' input: {q_max}. 'max' must be <={max_prime} for type '{q_type}'")
     if q_len > 1000:
